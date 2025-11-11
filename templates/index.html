@@ -1,18 +1,82 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Patient Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f7f9fc;
+        }
+        h1 {
+            color: #4a148c;
+        }
+        a {
+            text-decoration: none;
+            color: #1976d2;
+            margin-right: 10px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: #fff;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: #ececec;
+        }
+        .add-btn {
+            display: inline-block;
+            background-color: #1976d2;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
     <h1>Patient Records</h1>
-    <a href="/add">Add Patient</a>
-    <ul>
+
+    <a class="add-btn" href="/add">➕ Add New Patient</a>
+
+    {% if patients %}
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Contact</th>
+            <th>Actions</th>
+        </tr>
         {% for p in patients %}
-            <li>{{ p[1] }} ({{ p[2] }} years, {{ p[3] }}) - {{ p[4] }}
-                <a href="/delete/{{ p[0] }}">Delete</a>
-            </li>
+        <tr>
+            <td>{{ p[0] }}</td>
+            <td>{{ p[1] }}</td>
+            <td>{{ p[2] }}</td>
+            <td>{{ p[3] }}</td>
+            <td>{{ p[4] }}</td>
+            <td>
+                <a href="/edit/{{ p[0] }}">✏️ Edit</a>
+                <a href="/delete/{{ p[0] }}" style="color:red;">🗑 Delete</a>
+            </td>
+        </tr>
         {% endfor %}
-    </ul>
+    </table>
+    {% else %}
+    <p>No patients added yet.</p>
+    {% endif %}
 </body>
 </html>
 
