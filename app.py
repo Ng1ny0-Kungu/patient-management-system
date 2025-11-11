@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect
-import sqlite3
+import sqlite3, os
 
 app = Flask(__name__)
 
@@ -18,6 +18,12 @@ def init_db():
     ''')
     conn.commit()
     conn.close()
+
+# --- Run init_db when app starts ---
+@app.before_first_request
+def initialize_database():
+    if not os.path.exists('patients.db'):
+        init_db()
 
 @app.route('/')
 def index():
@@ -57,4 +63,3 @@ def delete_patient(id):
 if __name__ == '__main__':
     init_db()
     app.run(debug=True)
-
